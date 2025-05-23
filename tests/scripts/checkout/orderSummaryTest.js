@@ -1,5 +1,5 @@
 import { renderOrderSummary } from "../../../scripts/checkout/orderSummary.js";
-import {initCart, cart} from '../../../data/cart.js';
+import { cart } from '../../../data/cart-class.js';
 import { products } from '../../../data/products.js';
 
 describe('Test Suite: renderOrderSummary', () => {
@@ -26,7 +26,7 @@ describe('Test Suite: renderOrderSummary', () => {
         deliveryOptionId: '2'
       }]);
     });
-    initCart();
+    cart.initCart();
     renderOrderSummary();
   });
 
@@ -80,8 +80,8 @@ describe('Test Suite: renderOrderSummary', () => {
     expect(
       document.querySelector(`.js-CartItemContainer-${productId2}`)
     ).not.toBeNull();
-    expect(cart.length).toEqual(1);
-    expect(cart[0].productId).toEqual(productId2);
+    expect(cart.cartItem.length).toEqual(1);
+    expect(cart.cartItem[0].productId).toEqual(productId2);
 
   });
   

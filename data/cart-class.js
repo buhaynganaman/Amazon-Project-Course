@@ -1,14 +1,14 @@
-class Cart {
+export class Cart {
       cartItem = [];
       #localStorageKey;
 
 	constructor(localStorageKey) {
 		this.#localStorageKey = localStorageKey;
-            this.#initCart(); // initialize automatically
+            this.initCart(); // initialize automatically
 	}
 
       // Export an init function to load (or reset) the cart
-      #initCart() {
+      initCart() {
             const data = JSON.parse(localStorage.getItem(this.#localStorageKey));
                   if (Array.isArray(data)) { // check if the data is an array
                         this.cartItem = data; // if true store it in 'cart'
@@ -91,14 +91,15 @@ class Cart {
 }
 // creating new different Cart Classes
 // the parameter of Cart() is a uniq ID for each Cart Classes to defined a uniq self cart objects
-const cart = new Cart('cart-oop');
-const businessCart = new Cart('cart-business');
+export const cart = new Cart('cart-oop');
+
+// const businessCart = new Cart('cart-business');
 
 // for checking
 console.log(cart.calculateCartQuantity() +  " Quantity Working Realtime");
 console.log(cart.cartItem.length +  " Cart Length Working Realtime");
 
 console.log(cart);
-console.log(businessCart);
+// console.log(businessCart);
 
-console.log(businessCart instanceof Cart);
+// console.log(businessCart instanceof Cart);

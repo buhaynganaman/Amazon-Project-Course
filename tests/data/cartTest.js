@@ -1,4 +1,4 @@
-import {addToCart, cart, initCart, removeFromCart} from '../../data/cart.js';
+import { cart } from '../../data/cart-class.js';
 
 describe('Test Suite: addToCart', () => {
 
@@ -18,13 +18,13 @@ describe('Test Suite: addToCart', () => {
         deliveryOptionId: '1'
       }]);
     });
-    initCart();
+    cart.initCart();
 
-    addToCart(productId1, 1);
-    expect(cart.length).toEqual(1);
+    cart.addToCart(productId1, 1);
+    expect(cart.cartItem.length).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-    expect(cart[0].productId).toEqual(productId1);
-    expect(cart[0].quantity).toEqual(2);
+    expect(cart.cartItem[0].productId).toEqual(productId1);
+    expect(cart.cartItem[0].quantity).toEqual(2);
   });
 
   it('adds a new product to the cart', () => {
@@ -32,13 +32,13 @@ describe('Test Suite: addToCart', () => {
     spyOn(localStorage, 'getItem').and.callFake(() => {
       return JSON.stringify([]);
     });
-    initCart();
+    cart.initCart();
 
-    addToCart(productId1, 1);
-    expect(cart.length).toEqual(1);
+    cart.addToCart(productId1, 1);
+    expect(cart.cartItem.length).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-    expect(cart[0].productId).toEqual(productId1);
-    expect(cart[0].quantity).toEqual(1);
+    expect(cart.cartItem[0].productId).toEqual(productId1);
+    expect(cart.cartItem[0].quantity).toEqual(1);
   });
   
 });
@@ -66,12 +66,12 @@ describe('Test Suite: removeFromCart', () => {
       }]);
     });
 
-    removeFromCart(productId2);
-    const productIds = cart.map(item => item.productId);
+    cart.removeFromCart(productId2);
+    const productIds = cart.cartItem.map(item => item.productId);
 
     expect(productIds).not.toContain(productId2);
     expect(productIds).toContain(productId1);
-    expect(cart.length).toEqual(1);
+    expect(cart.cartItem.length).toEqual(1);
 
   });
 

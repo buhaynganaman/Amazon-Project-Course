@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 import { getProduct } from '../../data/products.js';
 import { calculateCartQuantity } from '../../data/cart.js';
 import { formatCurrency, calculate10PercentTax } from '../utils/money.js';
@@ -10,7 +10,7 @@ const cartQuantity = calculateCartQuantity(); // get the Over All quantity
 let totalProductsPriceCents = 0;
 let totalShippingPriceCents = 0;
 
-cart.forEach(cartItem => {
+cart.cartItem.forEach(cartItem => {
 	const productId = cartItem.productId;
 	const matchingProduct = getProduct(productId); // Find matching product
 
