@@ -1,5 +1,5 @@
 import { renderOrderSummary } from "../../../scripts/checkout/orderSummary.js";
-import { cart } from '../../../data/cart-class.js';
+import { testCart } from '../../../data/cart-class.js';
 import { products } from '../../../data/products.js';
 
 describe('Test Suite: renderOrderSummary', () => {
@@ -19,15 +19,15 @@ describe('Test Suite: renderOrderSummary', () => {
       return JSON.stringify([{
         productId: productId1,
         quantity: 2,
-        deliveryOptionId: '1'
+        deliveryOptionsId: '1'
       }, {
         productId: productId2,
         quantity: 1,
-        deliveryOptionId: '2'
+        deliveryOptionsId: '2'
       }]);
     });
-    cart.initCart();
-    renderOrderSummary();
+    testCart.initCart();
+    renderOrderSummary(testCart);
   });
 
   afterEach(() => {
@@ -64,24 +64,31 @@ describe('Test Suite: renderOrderSummary', () => {
 
 
   it('Removes a product', () => {
-
+    // check if I have 2 product
     expect(document.querySelectorAll('.js-cartItemContainerTEST').length).toBe(2);
 
+    // simulate the delete: delete the product 1
     document.querySelector(`.jsTest-deleteLink-${productId1}`).click();
     
+    // check if I only have 1 product after deleting the other 1
     expect(
       document.querySelectorAll('.js-cartItemContainerTEST').length
     ).toBe(1);
 
+    // check if the product 1 is null
     expect(
       document.querySelector(`.js-CartItemContainer-${productId1}`)
     ).toBeNull();
 
+    // check if the product 2 is still there
     expect(
       document.querySelector(`.js-CartItemContainer-${productId2}`)
     ).not.toBeNull();
-    expect(cart.cartItem.length).toEqual(1);
-    expect(cart.cartItem[0].productId).toEqual(productId2);
+
+    // now that I have only 1 product, I expect that I have 1 product only
+    expect(testCart.cartItem.length).toEqual(1);
+    // and also check if the product that remained in my cart is product 2
+    expect(testCart.cartItem[0].productId).toEqual(productId2);
 
   });
   

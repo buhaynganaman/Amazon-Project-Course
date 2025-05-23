@@ -92,6 +92,7 @@ export class Cart {
 // creating new different Cart Classes
 // the parameter of Cart() is a uniq ID for each Cart Classes to defined a uniq self cart objects
 export const cart = new Cart('cart-oop');
+export const testCart = new Cart('test-cart');
 
 // const businessCart = new Cart('cart-business');
 

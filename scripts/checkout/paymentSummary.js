@@ -1,12 +1,11 @@
 import { cart } from "../../data/cart-class.js";
 import { getProduct } from '../../data/products.js';
-import { calculateCartQuantity } from '../../data/cart.js';
 import { formatCurrency, calculate10PercentTax } from '../utils/money.js';
 import { getDeliveryOption } from '../../data/deliveryOptions.js';
 
 export function renderPaymentSummary() {
 
-const cartQuantity = calculateCartQuantity(); // get the Over All quantity
+const cartQuantity = cart.calculateCartQuantity(); // get the Over All quantity
 let totalProductsPriceCents = 0;
 let totalShippingPriceCents = 0;
 

@@ -1,4 +1,4 @@
-import { cart } from '../../data/cart-class.js';
+import { testCart } from '../../data/cart-class.js';
 
 describe('Test Suite: addToCart', () => {
 
@@ -18,13 +18,13 @@ describe('Test Suite: addToCart', () => {
         deliveryOptionId: '1'
       }]);
     });
-    cart.initCart();
+    testCart.initCart();
 
-    cart.addToCart(productId1, 1);
-    expect(cart.cartItem.length).toEqual(1);
+    testCart.addToCart(productId1, 1);
+    expect(testCart.cartItem.length).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-    expect(cart.cartItem[0].productId).toEqual(productId1);
-    expect(cart.cartItem[0].quantity).toEqual(2);
+    expect(testCart.cartItem[0].productId).toEqual(productId1);
+    expect(testCart.cartItem[0].quantity).toEqual(2);
   });
 
   it('adds a new product to the cart', () => {
@@ -32,13 +32,13 @@ describe('Test Suite: addToCart', () => {
     spyOn(localStorage, 'getItem').and.callFake(() => {
       return JSON.stringify([]);
     });
-    cart.initCart();
+    testCart.initCart();
 
-    cart.addToCart(productId1, 1);
-    expect(cart.cartItem.length).toEqual(1);
+    testCart.addToCart(productId1, 1);
+    expect(testCart.cartItem.length).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-    expect(cart.cartItem[0].productId).toEqual(productId1);
-    expect(cart.cartItem[0].quantity).toEqual(1);
+    expect(testCart.cartItem[0].productId).toEqual(productId1);
+    expect(testCart.cartItem[0].quantity).toEqual(1);
   });
   
 });
@@ -66,12 +66,12 @@ describe('Test Suite: removeFromCart', () => {
       }]);
     });
 
-    cart.removeFromCart(productId2);
-    const productIds = cart.cartItem.map(item => item.productId);
+    testCart.removeFromCart(productId2);
+    const productIds = testCart.cartItem.map(item => item.productId);
 
     expect(productIds).not.toContain(productId2);
     expect(productIds).toContain(productId1);
-    expect(cart.cartItem.length).toEqual(1);
+    expect(testCart.cartItem.length).toEqual(1);
 
   });
 
