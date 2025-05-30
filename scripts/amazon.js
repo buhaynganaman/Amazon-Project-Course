@@ -41,6 +41,8 @@ products.forEach((product) => { // generate the HTML Template for each product
 		</select>
 	</div>
 
+	${product.extraInfoHTML()}
+
 	<div class="product-spacer"></div>
 
 	<div class="added-to-cart js-addedToCart-${product.getID()}">
