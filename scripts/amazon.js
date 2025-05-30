@@ -1,6 +1,6 @@
 import { cart } from '../data/cart-class.js';
 import { products } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
+import { updateCartQuantity } from './amazon/amazonHeader.js';
 
 let productsHTML = ``; // store the HTML template
 
@@ -27,7 +27,7 @@ products.forEach((product) => { // generate the HTML Template for each product
 	</div>
 
 	<div class="product-quantity-container">
-		<select class="js-QuantitySelector-${product.id}">
+		<select class="js-QuantitySelector-${product.getID()}">
 			<option selected value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -43,13 +43,13 @@ products.forEach((product) => { // generate the HTML Template for each product
 
 	<div class="product-spacer"></div>
 
-	<div class="added-to-cart js-addedToCart-${product.id}">
+	<div class="added-to-cart js-addedToCart-${product.getID()}">
 		<img src="images/icons/checkmark.png">
 		Added
 	</div>
 
 	<button class="add-to-cart-button button-primary js-addToCart"
-		data-product-id="${product.id}">
+		data-product-id="${product.getID()}">
 		Add to Cart
 	</button>
 		</div>
@@ -93,13 +93,4 @@ document.querySelectorAll('.js-addToCart').forEach((button) => {
 		console.log(cart.cartItem);
 	});
 });
-
-function updateCartQuantity() { // Render the quantity in the cart page
-	const renderCartQuantity = document.querySelector(".js-cartQuantity");
-	renderCartQuantity.textContent = cart.calculateCartQuantity();
-
-	if (cart.calculateCartQuantity() === 0) {
-		renderCartQuantity.textContent = "";
-	}
-}
 updateCartQuantity();
