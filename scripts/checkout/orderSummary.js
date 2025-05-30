@@ -16,7 +16,7 @@ export function renderOrderSummary(cartInstance = cart) {
 		const deliveryDateFormat = calculateDeliveryDate(deliveryOption.deliveryDays)
 
 		cartSummaryHTML += `
-			<div class="cart-item-container js-cartItemContainerTEST js-CartItemContainer-${matchingProduct.id}">
+			<div class="cart-item-container js-cartItemContainerTEST js-CartItemContainer-${matchingProduct.getID()}">
 
 				<!-- Delivery Date -->
 				<div class="delivery-date">Delivery date: ${deliveryDateFormat}</div>
@@ -24,43 +24,43 @@ export function renderOrderSummary(cartInstance = cart) {
 				<div class="cart-item-details-grid">
 
 					<!-- Product Image -->
-					<img class="product-image" src="${matchingProduct.image}">
+					<img class="product-image" src="${matchingProduct.getImageUrl()}">
 
 					<div class="cart-item-details">
 
 						<!-- Product Name -->
-						<div class="product-name">${matchingProduct.name}</div>
+						<div class="product-name">${matchingProduct.getName()}</div>
 
 						<!-- Product Price -->
-						<div class="product-price">$${formatCurrency(matchingProduct.priceCents)}</div>
+						<div class="product-price">${matchingProduct.getPrice()}</div>
 
-						<div class="product-quantity jsTest-productQuantity-${matchingProduct.id}">
+						<div class="product-quantity jsTest-productQuantity-${matchingProduct.getID()}">
 							
 							<!-- Quantity Label -->
-							<span>Quantity: <span class="quantity-label js-quantityLabel-${matchingProduct.id}">${cartItem.quantity}</span></span>
+							<span>Quantity: <span class="quantity-label js-quantityLabel-${matchingProduct.getID()}">${cartItem.quantity}</span></span>
 							
 							<!-- Update Button -->
 							<span class="update-quantity-link 
 							link-primary 
 							js-updateQuantityLink" 
-							data-product-id="${matchingProduct.id}">
+							data-product-id="${matchingProduct.getID()}">
 							Update</span>
 
 							<!-- Quantity Input -->
-							<input type="number" class="quantity-input js-quantityInput-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
+							<input type="number" class="quantity-input js-quantityInput-${matchingProduct.getID()}" data-product-id="${matchingProduct.getID()}">
 							
 							<!-- Save Button -->
 							<span class="save-quantity-link 
 							link-primary 
 							js-saveLink" 
-							data-product-id="${matchingProduct.id}">
+							data-product-id="${matchingProduct.getID()}">
 							Save</span>
 
 							<!-- Delete Button -->
 							<span class="delete-quantity-link 
 							link-primary 
 							js-deleteLink 
-							jsTest-deleteLink-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
+							jsTest-deleteLink-${matchingProduct.getID()}" data-product-id="${matchingProduct.getID()}">
 							Delete</span>
 						</div>
 

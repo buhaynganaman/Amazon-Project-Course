@@ -20,6 +20,10 @@ class Products {
     this.priceCents = productDetails.priceCents;
   }
 
+  getID() {
+    return this.id;
+  }
+
   getImageUrl() {
     return this.image;
   }
@@ -736,5 +740,3 @@ export const products = [
 ].map((productDetails) => {
   return new Products(productDetails);
 });
-
-console.log(products)

@@ -10,6 +10,7 @@ export class Cart {
       // Export an init function to load (or reset) the cart
       initCart() {
             const data = JSON.parse(localStorage.getItem(this.#localStorageKey));
+
                   if (Array.isArray(data)) { // check if the data is an array
                         this.cartItem = data; // if true store it in 'cart'
                   } else {
@@ -27,6 +28,7 @@ export class Cart {
                               }
                         ];
                   }
+
             }
       
             // Save cart to localStorage
@@ -60,11 +62,11 @@ export class Cart {
       
             calculateCartQuantity() { // Get total item count
                   let productQuantity = 0; 
-            
+
                   this.cartItem.forEach((cartItem) => {
                         productQuantity += cartItem.quantity;
                   });
-            
+
                   return productQuantity;
             }
       
@@ -94,13 +96,8 @@ export class Cart {
 export const cart = new Cart('cart-oop');
 export const testCart = new Cart('test-cart');
 
-// const businessCart = new Cart('cart-business');
-
 // for checking
 console.log(cart.calculateCartQuantity() +  " Quantity Working Realtime");
 console.log(cart.cartItem.length +  " Cart Length Working Realtime");
 
 console.log(cart);
-// console.log(businessCart);
-
-// console.log(businessCart instanceof Cart);
