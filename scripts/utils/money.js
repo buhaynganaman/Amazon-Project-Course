@@ -1,11 +1,11 @@
 export function formatCurrency(priceCents) {
 	if (priceCents < 0) {
-		return 0.00;
+		return "0.00";
 	} else {
-		return Number((Math.round(priceCents) / 100).toFixed(2));
+		return (Math.round(priceCents) / 100).toFixed(2);
 	}
 }
 
 export function calculate10PercentTax(price) {
-	return Number((price * 0.1).toFixed(2));
+	return (price * 0.1).toFixed(2);
 }
