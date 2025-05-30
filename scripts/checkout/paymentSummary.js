@@ -21,9 +21,9 @@ cart.cartItem.forEach(cartItem => {
 	totalShippingPriceCents += deliveryOption.shippingPriceCents; // store shipping price
 });
 	// sum the total product price to shipping price
-const totalBeforeTaxCents = totalProductsPriceCents + totalShippingPriceCents;
+const totalBeforeTaxCents = Number(totalProductsPriceCents + totalShippingPriceCents);
 	// hold the 10% tax of the total price
-const totalTaxCents = calculate10PercentTax(totalBeforeTaxCents);
+const totalTaxCents = Number(calculate10PercentTax(totalBeforeTaxCents));
 	// sum the total price to 10% tax
 const finalTotalPriceCents = totalBeforeTaxCents + totalTaxCents;
 
