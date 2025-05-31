@@ -1,6 +1,8 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
+// Function to find and return a product by its ID
 export function getProduct(productId) {
+  // Finds the first product that matches the provided ID
   let matchingProduct = products.find(product => product.id === productId);
   return matchingProduct;
 }
@@ -13,6 +15,7 @@ class Product {
   priceCents;
 
   constructor(productDetails) {
+    // Initializes a new product object with details
     this.id = productDetails.id;
     this.image = productDetails.image;
     this.name = productDetails.name;
@@ -40,28 +43,29 @@ class Product {
     return this.rating.count;
   }
 
-  getPrice() {
-    return `$${formatCurrency(this.priceCents)}`;
+  getPrice() { // Converts price from cents and formats it as currency (e.g. $10.99)
+    return `$${formatCurrency(this.priceCents)}`; 
   }
 
-  extraInfoHTML() {
-    return '';
+  extraInfoHTML() { 
+    return ''; // Placeholder method for additional product HTML; empty by default for base Product
   }
 }
 
 class Clothing extends Product {
+  // Clothing subclass extends the Product class to include clothing-specific data
   sizeChartLink;
 
   constructor(productDetails) {
-    super(productDetails);
+    super(productDetails); // Call the base class constructor to initialize shared properties
     this.sizeChartLink = productDetails.sizeChartLink;
   }
 
   extraInfoHTML() {
-    super.extraInfoHTML();
+    super.extraInfoHTML();  // Call parent method
     return `
       <a href="${this.sizeChartLink}" target="_blank"> Size Chart </a>
-    `;
+    `; // Returns HTML anchor element linking to the size chart
   }
 }
 
@@ -764,5 +768,6 @@ export const products = [
     return new Clothing(productDetails);
   }
 
+  // base product details
   return new Product(productDetails);
 });
