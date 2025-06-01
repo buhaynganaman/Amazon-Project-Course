@@ -62,10 +62,12 @@ class Clothing extends Product {
   }
 
   extraInfoHTML() {
-    super.extraInfoHTML();  // Call parent method
+    const parentExtraInfoHTML = super.extraInfoHTML();  // Call parent method
     return `
-      <a href="${this.sizeChartLink}" target="_blank"> Size Chart </a>
+      ${parentExtraInfoHTML}
+      <a href="${this.sizeChartLink || '#'}" target="_blank">Size Chart</a>
     `; // Returns HTML anchor element linking to the size chart
+      // this '#' in anchor element if ever sizeChartLink is undefined, hindi sya mag-crash.
   }
 }
 
@@ -771,3 +773,11 @@ export const products = [
   // base product details
   return new Product(productDetails);
 });
+
+
+// Example Only.
+/* Built-in Class for Date/Time
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleTimeString());
+*/
