@@ -1,7 +1,7 @@
 import { cart } from "../../data/cart-class.js";
 import { getProduct } from '../../data/products.js';
 import { formatCurrency, calculate10PercentTax } from '../utils/money.js';
-import { getDeliveryOption } from '../../data/deliveryOptions.js';
+import { delivery } from '../../data/deliveryOptions.js';
 
 export function renderPaymentSummary() {
 
@@ -17,7 +17,7 @@ cart.cartItem.forEach(cartItem => {
 	totalProductsPriceCents += matchingProduct.priceCents * cartItem.quantity; // multiply products price to its quantity
 }
 
-	const deliveryOption = getDeliveryOption(cartItem.deliveryOptionsId); // Find matching delivery option
+	const deliveryOption = delivery.getDeliveryOption(cartItem.deliveryOptionsId); // Find matching delivery option
 	totalShippingPriceCents += deliveryOption.shippingPriceCents; // store shipping price
 });
 	// sum the total product price to shipping price

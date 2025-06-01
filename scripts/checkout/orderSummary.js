@@ -1,7 +1,7 @@
 import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
-import { deliveryOptions, getDeliveryOption, calculateDeliveryDate } from '../../data/deliveryOptions.js'; // Delivery options data
+import { delivery } from '../../data/deliveryOptions.js'; // Delivery options data
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 
@@ -12,8 +12,8 @@ export function renderOrderSummary(cartInstance = cart) {
 		const productId = cartItem.productId;
 		let matchingProduct = getProduct(productId); // Find matching product
 
-		const deliveryOption = getDeliveryOption(cartItem.deliveryOptionsId); // Find matching delivery option
-		const deliveryDateFormat = calculateDeliveryDate(deliveryOption.deliveryDays)
+		const deliveryOption = delivery.getDeliveryOption(cartItem.deliveryOptionsId); // Find matching delivery option
+		const deliveryDateFormat = delivery.calculateDeliveryDate(deliveryOption.deliveryDays)
 
 		cartSummaryHTML += `
 			<div class="cart-item-container js-cartItemContainerTEST js-CartItemContainer-${matchingProduct.getID()}">
@@ -79,8 +79,8 @@ export function renderOrderSummary(cartInstance = cart) {
 
 	// Generate delivery options HTML
 	function deliveryOptionsHTML(matchingProduct, cartItem) {
-		return deliveryOptions.map(option => {
-			const deliveryDateFormat = calculateDeliveryDate(option.deliveryDays)
+		return delivery.options.map(option => {
+			const deliveryDateFormat = delivery.calculateDeliveryDate(option.deliveryDays)
 			
 			const deliveryPriceFormat = option.shippingPriceCents === 0 ? "FREE" : `$${formatCurrency(option.shippingPriceCents)} -`;
 			const isChecked = option.id === cartItem.deliveryOptionsId; // Mark checked the selected Item
