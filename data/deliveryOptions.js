@@ -30,12 +30,13 @@ class Delivery {
   calculateDeliveryDate(deliveryDays) {
     const weekends = ['Saturday', 'Sunday'];
 
-    let deliveryDate = dayjs().add(deliveryDays, 'days');
-    let deliveryDateFormat = deliveryDate.format('dddd');
+    let deliveryDate = dayjs().add(deliveryDays, 'days'); // Calculate delivery date
+    let deliveryDateFormat = deliveryDate.format('dddd'); // Format date
 
+		// While loop to skip weekends
     while (weekends.includes(deliveryDateFormat)) {
       deliveryDate = deliveryDate.add(1, 'days');
-      deliveryDateFormat = deliveryDate.format('dddd');
+      deliveryDateFormat = deliveryDate.format('dddd'); // Update format
     }
 
     return deliveryDate.format('dddd, MMMM D');
