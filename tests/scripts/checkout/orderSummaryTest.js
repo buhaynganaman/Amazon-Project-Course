@@ -1,47 +1,66 @@
+// Import function that renders the cart items into the HTML (summary page)
 import { renderOrderSummary } from "../../../scripts/checkout/orderSummary.js";
+
+// Import the OOP-based cart system (test version)
 import { testCart } from '../../../data/cart-class.js';
+
+// Import the products list used for lookup (e.g. name, price, etc.)
 import { products } from '../../../data/products.js';
 
+// Define the main test suite for order summary rendering
 describe('Test Suite: renderOrderSummary', () => {
+  // Define two product IDs for testing purposes
   const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
   const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
 
+  // This will run before every test
   beforeEach(() => {
-  spyOn(localStorage, 'setItem');
+    // Spy on localStorage.setItem para hindi ito mag-save talaga sa localStorage
+    spyOn(localStorage, 'setItem');
 
-  document.querySelector(".js-test-container").innerHTML = `
-    <div class="js-ItemsCount"></div>
-    <div class="js-orderSummary"></div>
-    <div class="js-paymentSummary"></div>
-  `;
+    // Create the container elements that renderOrderSummary depends on
+    document.querySelector(".js-test-container").innerHTML = `
+      <div class="js-ItemsCount"></div>
+      <div class="js-orderSummary"></div>
+      <div class="js-paymentSummary"></div>
+    `;
 
+    // Simulate getting saved cart data from localStorage
     spyOn(localStorage, 'getItem').and.callFake(() => {
-      return JSON.stringify([{
-        productId: productId1,
-        quantity: 2,
-        deliveryOptionsId: '1'
-      }, {
-        productId: productId2,
-        quantity: 1,
-        deliveryOptionsId: '2'
-      }]);
+      return JSON.stringify([
+        {
+          productId: productId1,
+          quantity: 2,
+          deliveryOptionsId: '1'
+        },
+        {
+          productId: productId2,
+          quantity: 1,
+          deliveryOptionsId: '2'
+        }
+      ]);
     });
+
+    // Initialize the cart with fake data (retrieved above)
     testCart.initCart();
+
+    // Render the cart summary to the DOM
     renderOrderSummary(testCart);
   });
 
+  // Cleanup: this resets the HTML container after each test
   afterEach(() => {
     document.querySelector(".js-test-container").innerHTML = '';
   });
 
+  // Test if the cart correctly renders 2 items on screen
   it('Display the cart', () => {
-
     expect(
       document.querySelectorAll('.js-cartItemContainerTEST').length
     ).toEqual(2);
-
   });
 
+  // Test if the correct product name from the products array is used
   it('Display right product name', () => {
     expect(
       products[0].name
@@ -50,47 +69,45 @@ describe('Test Suite: renderOrderSummary', () => {
     );
   });
 
-
+  // Test if the correct product quantity is displayed for each product
   it('Display right product quantity', () => {
-
     expect(
       document.querySelector(`.jsTest-productQuantity-${productId1}`).innerText
     ).toContain('Quantity: 2');
+
     expect(
       document.querySelector(`.jsTest-productQuantity-${productId2}`).innerText
     ).toContain('Quantity: 1');
-    
   });
 
-
+  // Test if deleting a product updates the DOM and cart data correctly
   it('Removes a product', () => {
-    // check if I have 2 product
+    // Initial check: make sure 2 products are rendered
     expect(document.querySelectorAll('.js-cartItemContainerTEST').length).toBe(2);
 
-    // simulate the delete: delete the product 1
+    // Simulate clicking the delete button for product 1
     document.querySelector(`.jsTest-deleteLink-${productId1}`).click();
     
-    // check if I only have 1 product after deleting the other 1
+    // After deletion: only 1 product container should remain
     expect(
       document.querySelectorAll('.js-cartItemContainerTEST').length
     ).toBe(1);
 
-    // check if the product 1 is null
+    // Product 1 container should now be removed from DOM
     expect(
       document.querySelector(`.js-CartItemContainer-${productId1}`)
     ).toBeNull();
 
-    // check if the product 2 is still there
+    // Product 2 should still be present in the DOM
     expect(
       document.querySelector(`.js-CartItemContainer-${productId2}`)
     ).not.toBeNull();
 
-    // now that I have only 1 product, I expect that I have 1 product only
+    // Cart data should now have only 1 item
     expect(testCart.cartItem.length).toEqual(1);
-    // and also check if the product that remained in my cart is product 2
-    expect(testCart.cartItem[0].productId).toEqual(productId2);
 
+    // Check if the remaining item is product 2
+    expect(testCart.cartItem[0].productId).toEqual(productId2);
   });
-  
 
 });
