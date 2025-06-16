@@ -97,7 +97,6 @@ export const cart = new Cart('cart-oop');
 export const testCart = new Cart('test-cart');
 
 // for checking
-console.log(cart.calculateCartQuantity() +  " Quantity Working Realtime");
-console.log(cart.cartItem.length +  " Cart Length Working Realtime");
-
-console.log(cart);
+// console.log(cart.calculateCartQuantity() +  " Quantity Working Realtime");
+// console.log(cart.cartItem.length +  " Cart Length Working Realtime");
+// console.log(cart);

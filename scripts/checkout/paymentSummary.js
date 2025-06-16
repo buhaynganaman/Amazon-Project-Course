@@ -63,5 +63,5 @@ const paymentSummaryHTML =
 	</button>
 `
 document.querySelector('.js-paymentSummary').innerHTML = paymentSummaryHTML;
-console.log("paymentSummary.js All Working");
+// console.log("paymentSummary.js All Working"); // for checking
 }

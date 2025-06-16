@@ -155,5 +155,5 @@ export function renderOrderSummary(cartInstance = cart) {
 	});
 
 	renderCheckoutHeader();
-	console.log("OrderSummary.js All Working");
+	// console.log("OrderSummary.js All Working"); // for checking
 }
