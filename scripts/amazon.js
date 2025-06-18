@@ -2,8 +2,6 @@ import { cart } from '../data/cart-class.js';
 import { products, loadProductsFetch } from '../data/products.js';
 import { updateCartQuantity } from './amazon/amazonHeader.js';
 
-loadProductsFetch(renderProductsGrid);
-
 function renderProductsGrid() {
 
 	let productsHTML = ``; // store the HTML template
@@ -102,3 +100,6 @@ function renderProductsGrid() {
 	updateCartQuantity();
 
 }
+
+// trigger to render all data
+loadProductsFetch(renderProductsGrid);

@@ -1,4 +1,5 @@
-import { formatCurrency } from "../scripts/utils/money.js";
+import { formatCurrency } from "../scripts/utils/money format/money.js";
+import { safeCallback } from "../scripts/utils/defensive check/safeCallback.js";
 
 // Function to find and return a product by its ID
 export function getProduct(productId) {
@@ -117,7 +118,9 @@ export function loadProductsFetch(renderHomePage) {
     });
 
     console.log('Loaded Products from fetch')
-    renderHomePage(); // render the products data to amazon home page
+
+    // ✅ Only call renderHomePage if it's a function
+    safeCallback(renderHomePage);
   });
   return promise;
 }
