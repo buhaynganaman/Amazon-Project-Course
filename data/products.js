@@ -93,6 +93,39 @@ class Appliances extends Product {
 
 export let products = [];
 
+export function loadProductsFetch(renderHomePage) {
+
+  const promise = fetch('https://supersimplebackend.dev/products')
+  .then((response) => {
+    return response.json();
+  })
+  .then((productsData) => {
+    products = productsData.map((productDetails) => {
+  
+      // specific class for clothing type products
+      if(productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+    
+      // specific class for clothing type products
+      if(productDetails.type === 'appliances') {
+        return new Appliances(productDetails);
+      }
+    
+      // base product details
+      return new Product(productDetails);
+    });
+
+    console.log('Loaded Products from fetch')
+    renderHomePage(); // render the products data to amazon home page
+  });
+  return promise;
+}
+/* loadProductsFetch().then(() => {
+  console.log('next step')
+}); */
+
+/* // old ways to GET HTTP REQUEST FROM BACKEND USING XHR
 export function loadProducts(func) {
   const xhr = new XMLHttpRequest();
 
@@ -120,7 +153,7 @@ export function loadProducts(func) {
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 
-}
+} */
 
 /*
 export const products = [

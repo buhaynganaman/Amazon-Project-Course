@@ -5,7 +5,7 @@ import { renderOrderSummary } from "../../../scripts/checkout/orderSummary.js";
 import { testCart } from '../../../data/cart-class.js';
 
 // Import the products list used for lookup (e.g. name, price, etc.)
-import { products, loadProducts } from '../../../data/products.js';
+import { products, loadProductsFetch } from '../../../data/products.js';
 
 // Define the main test suite for order summary rendering
 describe('Test Suite: renderOrderSummary', () => {
@@ -14,11 +14,13 @@ describe('Test Suite: renderOrderSummary', () => {
   const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
 
   // This will run before All test
-  // "done" is a built in method of jasmine, it waits the code to finish before running the next function, so if the loadProducts done loading, 'done' will be called and finish the function and next.
+  // "done" is a built in method of jasmine, it waits the code to finish before running the next function, so if the loadProductsFetch done loading, 'done' will be called and finish the function and next.
   beforeAll((done) => {
-    loadProducts(() => {
+    loadProductsFetch(() => {
+      // dummy function just for testing 'renderHomePage();'
+    }).then(() => {
       done();
-    });
+    })
   })
 
   // This will run before every test
