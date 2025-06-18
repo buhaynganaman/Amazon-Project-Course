@@ -1,6 +1,6 @@
 import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js';
-import { formatCurrency } from '../utils/money.js';
+import { formatCurrency } from '../utils/money format/money.js';
 import { delivery } from '../../data/deliveryOptions.js'; // Delivery options data
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';

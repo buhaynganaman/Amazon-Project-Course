@@ -1,11 +1,10 @@
 // Import function that renders the cart items into the HTML (summary page)
 import { renderOrderSummary } from "../../../scripts/checkout/orderSummary.js";
-
 // Import the OOP-based cart system (test version)
 import { testCart } from '../../../data/cart-class.js';
-
 // Import the products list used for lookup (e.g. name, price, etc.)
 import { products, loadProductsFetch } from '../../../data/products.js';
+
 
 // Define the main test suite for order summary rendering
 describe('Test Suite: renderOrderSummary', () => {

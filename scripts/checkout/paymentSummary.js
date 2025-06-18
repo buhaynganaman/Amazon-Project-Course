@@ -1,6 +1,6 @@
 import { cart } from "../../data/cart-class.js";
 import { getProduct } from '../../data/products.js';
-import { formatCurrency, calculate10PercentTax } from '../utils/money.js';
+import { formatCurrency, calculate10PercentTax } from '../utils/money format/money.js';
 import { delivery } from '../../data/deliveryOptions.js';
 
 export function renderPaymentSummary() {
