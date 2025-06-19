@@ -5,6 +5,27 @@ import { loadCart } from "../data/cart-class.js";
 // import '../data/cart-class.js';
 // import '../data/backend-practice.js'; // for practice
 
+async function loadCheckoutPage() {
+  try {
+    // Fetch style not XHR
+    await loadProductsFetch();
+    // XHR style not Fetch
+    await new Promise((resolve) => {
+      loadCart(() => resolve());
+    });
+
+    // now safe to render data
+    renderPaymentSummary(); 
+    renderOrderSummary();
+
+  } catch (error) {
+    console.error('Something went wrong loading checkout:', error);
+    // You can show error message on UI here if needed
+  }
+}
+loadCheckoutPage();
+
+/* 
 Promise.all([
   // already return promise
   loadProductsFetch(),
@@ -20,7 +41,7 @@ Promise.all([
   renderPaymentSummary(); // now safe to render data
   renderOrderSummary();   // now safe to render data
 });
-
+*/
 
 // Step by Step 'Promise'
 // also can use resolve parameter as bridge for value/data
