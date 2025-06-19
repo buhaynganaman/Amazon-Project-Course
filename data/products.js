@@ -95,10 +95,11 @@ class Appliances extends Product {
 export let products = [];
 
 export function loadProductsFetch(renderHomePage) {
-
+  // Start the fetch request to get product data from the backend.
   const promise = fetch('https://supersimplebackend.dev/products')
+  // When response is received, convert it from a readable stream to JSON format.
   .then((response) => {
-    return response.json();
+    return response.json(); // returns a Promise with JSON.parse() data
   })
   .then((productsData) => {
     products = productsData.map((productDetails) => {
@@ -119,9 +120,10 @@ export function loadProductsFetch(renderHomePage) {
 
     console.log('Loaded Products from fetch')
 
-    // ✅ Only call renderHomePage if it's a function
+    // Safely call the renderHomePage function if it exists and is valid
     safeCallback(renderHomePage);
   });
+
   return promise;
 }
 /* loadProductsFetch().then(() => {
