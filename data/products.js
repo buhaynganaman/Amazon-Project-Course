@@ -122,7 +122,10 @@ export function loadProductsFetch(renderHomePage) {
 
     // Safely call the renderHomePage function if it exists and is valid
     safeCallback(renderHomePage);
-  });
+  });/* .catch((error) => {
+    console.log(error)
+    console.log('BOBO my error')
+  });// Handle any errors in the fetch chain (e.g. network errors) */
 
   return promise;
 }
@@ -155,10 +158,14 @@ export function loadProducts(func) {
     func();
   })
 
+  xhr.addEventListener('error', (error) => {
+    console.log("ERROR");
+  })
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
-
-} */
+}
+*/
 
 /*
 export const products = [

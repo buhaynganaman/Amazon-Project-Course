@@ -7,11 +7,15 @@ import { loadCart } from "../data/cart-class.js";
 
 async function loadCheckoutPage() {
   try {
-    // Fetch style not XHR
+    // Fetch style not XHR, its already a promise
     await loadProductsFetch();
-    // XHR style not Fetch
-    await new Promise((resolve) => {
-      loadCart(() => resolve());
+    // XHR style not Fetch, Promisify loadCart()
+    await new Promise((resolve, reject) => {
+      loadCart(() => {
+        // Here, reject() is called to simulate an error
+        //reject('Error3'); // Triggers the catch block below
+        resolve();
+      });
     });
 
     // now safe to render data
@@ -20,7 +24,7 @@ async function loadCheckoutPage() {
 
   } catch (error) {
     console.error('Something went wrong loading checkout:', error);
-    // You can show error message on UI here if needed
+    // show error message
   }
 }
 loadCheckoutPage();
