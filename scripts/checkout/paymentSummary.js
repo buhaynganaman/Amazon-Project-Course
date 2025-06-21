@@ -76,21 +76,29 @@ export function renderPaymentSummary() {
 			const response = await fetch('https://supersimplebackend.dev/orders', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json',
+					// Telling the server I am sending JSON
+					'Content-Type': 'application/json', 
 				},
 				body: JSON.stringify({
 					cart: cart.getItems()
 				}),
 			});
-	
+
+			// Check if the response is okay
+      if (!response.ok) {
+        throw new Error(`POST request failed: ${response.status}`);
+      }
+			
+			// JSONparsed the response
 			const order = await response.json();
 			addOrder(order);
 			console.log('Place Order Success')
 
 		} catch (error) {
-			console.log('ERROR "POST-REQUEST" at place order', error)
+			console.log('ERROR "POST-REQUEST" at place order', error);
 		}
 
+		// Redirect the user to the orders page
 		window.location.href = 'orders.html';
 
 	});
