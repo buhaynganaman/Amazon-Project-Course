@@ -1,6 +1,11 @@
 export class Cart {
+
 	cartItem = [];
 	#localStorageKey;
+	// Private identifier for the cart’s localStorage key. 
+	// This allows each Cart instance to save/load its own data
+	// in a unique localStorage entry (e.g., 'cart-oop' or 'test-cart'),
+	// keeping data isolated between instances.
 
 	constructor(localStorageKey) {
 		this.#localStorageKey = localStorageKey;
@@ -52,6 +57,11 @@ export class Cart {
 		}
 
 		this.saveToStorage();
+	}
+
+	// get all stored data (items) of the cart.
+	getItems() {
+		return this.cartItem;
 	}
 
 	// Over ALl function: the productId that pass to this function parameter would be eliminated from cart and the cartItems that not pass from the parameter will remain to the main Cart.
