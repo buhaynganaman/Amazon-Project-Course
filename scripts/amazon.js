@@ -1,5 +1,5 @@
 import {  loadProductsFetch } from '../data/products.js';
-import { renderProductsGrid } from './amazon/renderProductsGrid.js';
+import { renderProductsGrid } from './amazon/ProductsGrid.js';
 
 renderProductsGrid();
 
