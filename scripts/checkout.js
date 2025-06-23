@@ -1,7 +1,7 @@
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { loadProductsFetch } from "../data/products.js";
-import { loadCart } from "../data/cart-class.js";
+// import { loadCart } from "../data/cart-class.js";
 // import '../data/cart-class.js';
 // import '../data/backend-practice.js'; // for practice
 
@@ -9,14 +9,16 @@ async function loadCheckoutPage() {
   try {
     // Fetch style not XHR, its already a promise
     await loadProductsFetch();
+
+
     // XHR style not Fetch, Promisify loadCart()
-    await new Promise((resolve, reject) => {
+    /* await new Promise((resolve, reject) => {
       loadCart(() => {
         // Here, reject() is called to simulate an error
         //reject('Error3'); // Triggers the catch block below
         resolve();
       });
-    });
+    }); */
 
     // now safe to render data
     renderPaymentSummary(); 

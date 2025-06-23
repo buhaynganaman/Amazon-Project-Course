@@ -112,15 +112,16 @@ export const testCart = new Cart('test-cart');
 // console.log(cart);
 
 
+/* // old ways to GET HTTP REQUEST FROM BACKEND USING XHR
 export function loadCart(func) {
 	const xhr = new XMLHttpRequest();
 
 	xhr.addEventListener('load', () => {
-		console.log(xhr.response)
+		console.log(xhr.response);
 		func();
 	})
 
 	xhr.open('GET', 'https://supersimplebackend.dev/cart');
 	xhr.send();
 
-}
+} */

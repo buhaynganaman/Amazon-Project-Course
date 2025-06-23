@@ -4,7 +4,7 @@ function renderHeaders() {
 
   let headerHTML = '';
 
-  headerHTML = 
+  headerHTML += 
   `
       <div class="amazon-header-left-section">
         <a href="amazon.html" class="header-link">
