@@ -2,7 +2,7 @@ import { cart } from "../../data/cart-class.js";
 import { getProduct } from '../../data/products.js';
 import { formatCurrency, calculate10PercentTax } from '../utils/money format/money.js';
 import { delivery } from '../../data/deliveryOptions.js';
-import { addOrder } from "../../data/orders.js";
+import { orders } from "../../data/ordersData.js";
 
 export function renderPaymentSummary() {
 
@@ -68,41 +68,10 @@ export function renderPaymentSummary() {
 	`
 	document.querySelector('.js-paymentSummary').innerHTML = paymentSummaryHTML;
 
-	document.querySelector('.js-PlaceOrderBtn')
-	.addEventListener('click', async () => {
-
-		try {
-
-			const response = await fetch('https://supersimplebackend.dev/orders', {
-				method: 'POST',
-				headers: {
-					// Telling the server I am sending JSON
-					'Content-Type': 'application/json', 
-				},
-				body: JSON.stringify({
-					cart: cart.getItems()
-				}),
-			});
-
-			// Check if the response is okay
-      if (!response.ok) {
-        throw new Error(`POST request failed: ${response.status}`);
-      }
-			
-			// JSONparsed the response
-			const order = await response.json();
-			addOrder(order);
-			console.log('Place Order Success')
-
-		} catch (error) {
-			console.log('ERROR "POST-REQUEST" at place order', error);
-		}
-
-		// Redirect the user to the orders page
-		window.location.href = 'orders.html';
-
+	const placeOrderBtn = document.querySelector('.js-PlaceOrderBtn');
+	placeOrderBtn.addEventListener('click', () => {
+		orders.placeOrder();
 	});
-
 
 // console.log(cart.getItems())
 // console.log("paymentSummary.js All Working"); // for checking

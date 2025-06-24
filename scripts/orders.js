@@ -1,3 +1,7 @@
 import { updateCartQuantity } from './headers/renderHeaders.js';
-console.log("order.js")
+import { renderYourOrders } from './orders/renderYourOrders.js'
+
 updateCartQuantity();
+renderYourOrders();
+
+console.log("order.js");
