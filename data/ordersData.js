@@ -1,19 +1,11 @@
 import { cart } from "./cart-class.js";
 
 class Order {
-  ordersData = [];           // Always an array
-  orderIDs = [];             // Will hold ids
-  orderTime = [];            // Will hold order times
-  orderTotalCostCents = [];  // Will hold total cost cents
-  orderProducts = [];        // Will hold products data
+  ordersData = []; // Always an array
 
   constructor() {
     // Load data from storage
     this.ordersData = JSON.parse(localStorage.getItem('ordersData')) || [];
-    this.setIDs();
-    this.setTimes();
-    this.setTotalCosts();
-    this.setProducts();
   }
 
   async placeOrder() {
@@ -40,52 +32,13 @@ class Order {
   addOrder(order) {
     this.ordersData.unshift(order);
     this.saveToStorage();
-    this.setIDs();
-    this.setTimes();
-    this.setTotalCosts();
-    this.setProducts();
   }
 
   saveToStorage() {
     localStorage.setItem('ordersData', JSON.stringify(this.ordersData));
   }
 
-  // Setters
-  setIDs() {
-    this.orderIDs = this.ordersData.map(data => data.id);
-  }
-
-  setTimes() {
-    this.orderTime = this.ordersData.map(data => data.orderTime);
-  }
-
-  setTotalCosts() {
-    this.orderTotalCostCents = this.ordersData.map(data => data.totalCostCents);
-  }
-
-  setProducts() {
-    this.orderProducts = this.ordersData.map(data => data.products);
-  }
-
-  // Getters
-  getIDs() {
-    return this.orderIDs;
-  }
-
-  getTimes() {
-    return this.orderTime;
-  }
-
-  getTotalCosts() {
-    return this.orderTotalCostCents;
-  }
-
-  getProducts() {
-    return this.orderProducts;
-  }
-
-  // Debugging
-  showOrdersData() {
+  getData() {
     return this.ordersData;
   }
 }
