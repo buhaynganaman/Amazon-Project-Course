@@ -1,12 +1,6 @@
 import { orders } from "../../data/ordersData.js";
 import { getProduct } from "../../data/products.js";
-
-import { products } from '../../data/products.js';
-
-
-orders.getData().map((data) => {
-  console.log(data.products)
-})
+import { readableDate } from "../utils/date & time/date.js";
 
 export function renderYourOrders() {
 
@@ -22,7 +16,7 @@ export function renderYourOrders() {
             <div class="order-header-left-section">
               <div class="order-date">
                 <div class="order-header-label">Order Placed:</div>
-                <div>${orderItem.orderTime}</div>
+                <div>${readableDate(orderItem.orderTime)}</div>
               </div>
               <div class="order-total">
                 <div class="order-header-label">Total:</div>
@@ -67,7 +61,7 @@ function renderProductDetails(products) {
           ${matchingProduct.getName()}
           </div>
           <div class="product-delivery-date">
-            Arriving on: ${product.estimatedDeliveryTime}
+            Arriving on: ${readableDate(product.estimatedDeliveryTime)}
           </div>
           <div class="product-quantity">
             Quantity: ${product.quantity}
