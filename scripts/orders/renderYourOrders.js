@@ -1,6 +1,7 @@
 import { orders } from "../../data/ordersData.js";
 import { getProduct } from "../../data/products.js";
 import { readableDate } from "../utils/date & time/date.js";
+import { formatCurrency } from "../utils/money format/money.js";
 
 export function renderYourOrders() {
 
@@ -20,7 +21,7 @@ export function renderYourOrders() {
               </div>
               <div class="order-total">
                 <div class="order-header-label">Total:</div>
-                <div>${orderItem.totalCostCents}</div>
+                <div>$${formatCurrency(orderItem.totalCostCents)}</div>
               </div>
             </div>
 
