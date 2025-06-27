@@ -1,56 +1,49 @@
 import { orders } from "../../data/ordersData.js";
 import { getProduct } from "../../data/products.js";
-import { readableDate } from "../utils/date & time/date.js";
-import { formatCurrency } from "../utils/money format/money.js";
 
 export function renderYourOrders() {
-
   let yourOdersHTML = ``;
 
-  orders.getData().forEach((orderItem) => {
-    yourOdersHTML += 
-    `
-        <div class="order-container js-OrderContainer-${orderItem.id}">
-          
-          <!-- HEADER PART -->
-          <div class="order-header">
-            <div class="order-header-left-section">
-              <div class="order-date">
-                <div class="order-header-label">Order Placed:</div>
-                <div>${readableDate(orderItem.orderTime)}</div>
-              </div>
-              <div class="order-total">
-                <div class="order-header-label">Total:</div>
-                <div>$${formatCurrency(orderItem.totalCostCents)}</div>
-              </div>
-            </div>
+  orders.getOrders().forEach(orderItem => {
+    yourOdersHTML += `
+      <div class="order-container js-OrderContainer-${orderItem.getId()}">
 
-            <div class="order-header-right-section">
-              <div class="order-header-label">Order ID:</div>
-              <div>${orderItem.id}</div>
+        <!-- HEADER PART -->
+        <div class="order-header">
+          <div class="order-header-left-section">
+            <div class="order-date">
+              <div class="order-header-label">Order Placed:</div>
+              <div>${orderItem.getDate()}</div>
+            </div>
+            <div class="order-total">
+              <div class="order-header-label">Total:</div>
+              <div>${orderItem.getTotal()}</div>
             </div>
           </div>
 
-          <!-- PRODUCT DETAIL PART -->
-          ${renderProductDetails(orderItem.products)}
-
+          <div class="order-header-right-section">
+            <div class="order-header-label">Order ID:</div>
+            <div>${orderItem.getId()}</div>
+          </div>
         </div>
+
+        <!-- PRODUCT DETAIL PART -->
+        ${renderProductDetails(orderItem.getProducts())}
+      </div>
     `;
-  })
+  });
 
   const orderContainer = document.querySelector('.js-OrdersGrid');
   orderContainer.innerHTML = yourOdersHTML;
-
 }
 
 function renderProductDetails(products) {
   let productDetails = ``;
 
-  products.forEach(product => {
-    const matchingProduct = getProduct(product.productId);
+  products.forEach(productItem => {
+    const matchingProduct = getProduct(productItem.getProductId());
 
-    productDetails +=
-    `
+    productDetails += `
       <div class="order-details-grid js-orderDetails-${matchingProduct.getID()}">
 
         <div class="product-image-container">
@@ -58,33 +51,19 @@ function renderProductDetails(products) {
         </div>
 
         <div class="product-details">
-          <div class="product-name">
-          ${matchingProduct.getName()}
-          </div>
-          <div class="product-delivery-date">
-            Arriving on: ${readableDate(product.estimatedDeliveryTime)}
-          </div>
-          <div class="product-quantity">
-            Quantity: ${product.quantity}
-          </div>
-          <button class="buy-again-button button-primary">
-            <img class="buy-again-icon" src="images/icons/buy-again.png">
-            <span class="buy-again-message">Buy it again</span>
-          </button>
+          <div class="product-name">${matchingProduct.getName()}</div>
+          <div class="product-delivery-date">Arriving on: ${productItem.getDeliveryDate()}</div>
+          <div class="product-quantity">Quantity: ${productItem.getQuantity()}</div>
         </div>
 
         <div class="product-actions">
           <a href="tracking.html">
-            <button class="track-package-button button-secondary">
-              Track package
-            </button>
+            <button class="track-package-button button-secondary">Track package</button>
           </a>
         </div>
-
       </div>
     `;
-
   });
-
+  
   return productDetails;
 }

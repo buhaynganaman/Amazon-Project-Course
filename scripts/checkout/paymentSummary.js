@@ -2,7 +2,7 @@ import { cart } from "../../data/cart-class.js";
 import { getProduct } from '../../data/products.js';
 import { formatCurrency, calculate10PercentTax } from '../utils/money format/money.js';
 import { delivery } from '../../data/deliveryOptions.js';
-import { orders } from "../../data/ordersData.js";
+import { placeOrder } from "../../data/ordersData.js";
 
 export function renderPaymentSummary() {
 
@@ -70,7 +70,7 @@ export function renderPaymentSummary() {
 
 	const placeOrderBtn = document.querySelector('.js-PlaceOrderBtn');
 	placeOrderBtn.addEventListener('click', () => {
-		orders.placeOrder();
+		placeOrder();
 	});
 
 // console.log(cart.getItems())

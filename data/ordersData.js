@@ -1,32 +1,75 @@
 import { cart } from "./cart-class.js";
+import { readableDate } from "../scripts/utils/date & time/date.js";
+import { formatCurrency } from "../scripts/utils/money format/money.js";
 
-class Order {
-  ordersData = []; // Always an array
+export async function placeOrder() {
+  try {
+    const response = await fetch('https://supersimplebackend.dev/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cart: cart.getItems() }),
+    });
 
-  constructor() {
-    // Load data from storage
-    this.ordersData = JSON.parse(localStorage.getItem('ordersData')) || [];
+    if (!response.ok) {
+      throw new Error(`POST request failed: ${response.status}`);
+    }
+
+    const order = await response.json();
+    orders.addOrder(order);
+  } catch (error) {
+    console.log('ERROR "POST-REQUEST" at place order', error);
+  }
+}
+
+
+class ProductItem {
+  constructor(data) {
+    this.data = data;
   }
 
-  async placeOrder() {
-    try {
-      const response = await fetch('https://supersimplebackend.dev/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ cart: cart.getItems() }),
-      });
+  getProductId() {
+    return this.data.productId;
+  }
 
-      if (!response.ok) {
-        throw new Error(`POST request failed: ${response.status}`);
-      }
+  getDeliveryDate() {
+    return readableDate(this.data.estimatedDeliveryTime);
+  }
 
-      const order = await response.json();
-      this.addOrder(order);
-    } catch (error) {
-      console.log('ERROR "POST-REQUEST" at place order', error);
-    }
+  getQuantity() {
+    return this.data.quantity;
+  }
+}
+
+class OrderItem {
+  constructor(data) {
+    this.data = data;
+    this.products = data.products.map(product => new ProductItem(product));
+  }
+
+  getId() {
+    return this.data.id;
+  }
+
+  getDate() {
+    return readableDate(this.data.orderTime);
+  }
+
+  getTotal() {
+    return `$${formatCurrency(this.data.totalCostCents)}`;
+  }
+
+  getProducts() {
+    return this.products;
+  }
+}
+
+class Orders {
+  ordersData = [];
+
+  constructor() {
+    this.ordersData = JSON.parse(localStorage.getItem("ordersData")) || [];
   }
 
   addOrder(order) {
@@ -35,16 +78,16 @@ class Order {
   }
 
   saveToStorage() {
-    localStorage.setItem('ordersData', JSON.stringify(this.ordersData));
+    localStorage.setItem("ordersData", JSON.stringify(this.ordersData));
   }
 
-  getData() {
-    return this.ordersData;
+  getOrders() {
+    return this.ordersData.map(orderData => new OrderItem(orderData));
   }
 }
 
-// Export instance
-export const orders = new Order();
+export const orders = new Orders();
+
 
 
 /* export async function placeOrder() {
