@@ -1,4 +1,4 @@
-import { formatCurrency } from "../scripts/utils/money format/money.js";
+import { formatCurrency } from "../scripts/utils/money/moneyFormat.js";
 import { safeCallback } from "../scripts/utils/defensive check/safeCallback.js";
 
 // Function to find and return a product by its ID
