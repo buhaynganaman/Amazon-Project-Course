@@ -1,9 +1,10 @@
 import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js';
-import { formatCurrency } from '../utils/money format/money.js';
+import { formatCurrency } from '../utils/money/moneyFormat.js';
 import { delivery } from '../../data/deliveryOptions.js'; // Delivery options data
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
+import { payment } from '../utils/money/paymentCalculation.js';
 
 export function renderOrderSummary(cartInstance = cart) {
 	let cartSummaryHTML = '';
@@ -125,6 +126,7 @@ export function renderOrderSummary(cartInstance = cart) {
 		document.querySelector(`.js-quantityLabel-${productId}`).textContent = newQuantity;
 		document.querySelector(`.js-CartItemContainer-${productId}`).classList.remove("is-editing-quantity");
 
+		payment.init();
 		renderCheckoutHeader();
 		renderPaymentSummary();
 	}
@@ -138,6 +140,7 @@ export function renderOrderSummary(cartInstance = cart) {
 
 			document.querySelector(`.js-CartItemContainer-${productId}`).remove();
 			
+			payment.init();
 			renderCheckoutHeader();
 			renderPaymentSummary();
 		});
@@ -148,7 +151,8 @@ export function renderOrderSummary(cartInstance = cart) {
 		option.addEventListener('click', () => {
 			const { productId, deliveryOptionId } = option.dataset;
 			cartInstance.updateDeliveryOption(productId, deliveryOptionId);
-
+			console.log('Click')
+			payment.init();
 			renderOrderSummary();
 			renderPaymentSummary();
 		});

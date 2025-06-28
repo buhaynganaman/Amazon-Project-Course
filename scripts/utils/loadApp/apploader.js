@@ -5,12 +5,17 @@ export async function loadApp(callbacks = []) {
     // First load the products
     await loadProductsFetch();
 
-    // Then run all the callback functions
+    // Run all the callbacks, whether they are functions or objects with a callback method
     callbacks.forEach(cb => {
       if (typeof cb === "function") {
-        cb();
+        cb(); // normal function
+      } else if (typeof cb === "object" && typeof cb.callback === "function") {
+        cb.init(); // object with a callback method
+      } else {
+        console.warn('⚠️ Unknown callback format:', cb);
       }
     });
+
   } catch (error) {
     console.error("Something went wrong loading the app:", error);
   }

@@ -1,12 +1,19 @@
+import { payment } from "./utils/money/paymentCalculation.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { loadApp } from "./utils/loadApp/apploader.js";
-
 // import { loadCart } from "../data/cart-class.js";
 // import '../data/cart-class.js';
 // import '../data/backend-practice.js'; // for practice
 
-loadApp([renderPaymentSummary, renderOrderSummary]);
+loadApp([() => payment.init(), renderOrderSummary, renderPaymentSummary, () => {
+  console.log(typeof payment)
+  console.log('Class Total Product Price', payment.getProductPrice());
+  console.log('Class Total Shipping Price', payment.getShippingPrice());
+  console.log('Class Total Before Tax', payment.getTotalBeforeTax());
+  console.log('Class Total Tax ', payment.getTotalTax());
+  console.log('Class Final Price ', payment.getFinalTotalPrice());
+}]);
 
 /* 
 Promise.all([
