@@ -71,6 +71,11 @@ class PaymentCalculation {
   getFinalTotalPrice () {
     return formatCurrency(this.finalTotalPriceCents);
   }
+
+  getRawFinalTotalPrice() {
+    return this.finalTotalPriceCents;
+  }
+  
 }
 
 // Export as an instance

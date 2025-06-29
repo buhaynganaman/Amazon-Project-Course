@@ -1,6 +1,7 @@
 import { cart } from "./cart-class.js";
 import { readableDate } from "../scripts/utils/date & time/date.js";
-import { formatCurrency } from "../scripts/utils/money format/money.js";
+import { formatCurrency } from "../scripts/utils/money/moneyFormat.js";
+import { payment } from "../scripts/utils/money/paymentCalculation.js";
 
 export async function placeOrder() {
   try {
@@ -9,7 +10,9 @@ export async function placeOrder() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ cart: cart.getItems() }),
+      body: JSON.stringify({ 
+        cart: cart.getItems()
+      }),
     });
 
     if (!response.ok) {
@@ -17,7 +20,9 @@ export async function placeOrder() {
     }
 
     const order = await response.json();
+    order.totalCostCents = payment.getRawFinalTotalPrice();
     orders.addOrder(order);
+    console.log(order);
   } catch (error) {
     console.log('ERROR "POST-REQUEST" at place order', error);
   }
@@ -48,6 +53,7 @@ class OrderItem {
     this.products = data.products.map(product => new ProductItem(product));
   }
 
+  // getters
   getId() {
     return this.data.id;
   }
@@ -57,7 +63,7 @@ class OrderItem {
   }
 
   getTotal() {
-    return `$${formatCurrency(this.data.totalCostCents)}`;
+    return formatCurrency(this.data.totalCostCents);
   }
 
   getProducts() {
