@@ -1,4 +1,4 @@
-import { formatCurrency, calculate10PercentTax } from '../../scripts/utils/money format/money.js';
+import { formatCurrency, calculate10PercentTax } from '../../scripts/utils/money/moneyFormat.js';
 
 describe('Test Suite: formatCurrency', () => {
 
