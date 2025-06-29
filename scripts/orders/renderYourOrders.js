@@ -17,7 +17,7 @@ export function renderYourOrders() {
             </div>
             <div class="order-total">
               <div class="order-header-label">Total:</div>
-              <div>${orderItem.getTotal()}</div>
+              <div>$${orderItem.getTotal()}</div>
             </div>
           </div>
 
