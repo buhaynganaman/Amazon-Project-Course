@@ -9,72 +9,84 @@ import { payment } from '../utils/money/paymentCalculation.js';
 export function renderOrderSummary(cartInstance = cart) {
 	let cartSummaryHTML = '';
 
-	cartInstance.cartItem.forEach((cartItem) => {
-		const productId = cartItem.productId;
-		let matchingProduct = getProduct(productId); // Find matching product
+	if(!cart.calculateCartQuantity()) {
+		console.log('Empty Cart')
+		cartSummaryHTML = 
+		`
+			<p style="margin-bottom: 15px">Your cart is empty.</p>
+			<button class="button-primary">
+			<a href="amazon.html">View Products</a>
+			</button>
+		`
+	} else {
+		cartInstance.cartItem.forEach((cartItem) => {
 
-		const deliveryOption = delivery.getDeliveryOption(cartItem.deliveryOptionsId); // Find matching delivery option
-		const deliveryDateFormat = delivery.calculateDeliveryDate(deliveryOption.deliveryDays)
-
-		cartSummaryHTML += `
-			<div class="cart-item-container js-cartItemContainerTEST js-CartItemContainer-${matchingProduct.getID()}">
-
-				<!-- Delivery Date -->
-				<div class="delivery-date">Delivery date: ${deliveryDateFormat}</div>
-
-				<div class="cart-item-details-grid">
-
-					<!-- Product Image -->
-					<img class="product-image" src="${matchingProduct.getImageUrl()}">
-
-					<div class="cart-item-details">
-
-						<!-- Product Name -->
-						<div class="product-name">${matchingProduct.getName()}</div>
-
-						<!-- Product Price -->
-						<div class="product-price">${matchingProduct.getPrice()}</div>
-
-						<div class="product-quantity jsTest-productQuantity-${matchingProduct.getID()}">
-							
-							<!-- Quantity Label -->
-							<span>Quantity: <span class="quantity-label js-quantityLabel-${matchingProduct.getID()}">${cartItem.quantity}</span></span>
-							
-							<!-- Update Button -->
-							<span class="update-quantity-link 
-							link-primary 
-							js-updateQuantityLink" 
-							data-product-id="${matchingProduct.getID()}">
-							Update</span>
-
-							<!-- Quantity Input -->
-							<input type="number" class="quantity-input js-quantityInput-${matchingProduct.getID()}" data-product-id="${matchingProduct.getID()}">
-							
-							<!-- Save Button -->
-							<span class="save-quantity-link 
-							link-primary 
-							js-saveLink" 
-							data-product-id="${matchingProduct.getID()}">
-							Save</span>
-
-							<!-- Delete Button -->
-							<span class="delete-quantity-link 
-							link-primary 
-							js-deleteLink 
-							jsTest-deleteLink-${matchingProduct.getID()}" data-product-id="${matchingProduct.getID()}">
-							Delete</span>
+			const productId = cartItem.productId;
+			let matchingProduct = getProduct(productId); // Find matching product
+	
+			const deliveryOption = delivery.getDeliveryOption(cartItem.deliveryOptionsId); // Find matching delivery option
+			const deliveryDateFormat = delivery.calculateDeliveryDate(deliveryOption.deliveryDays)
+	
+			cartSummaryHTML += `
+				<div class="cart-item-container js-cartItemContainerTEST js-CartItemContainer-${matchingProduct.getID()}">
+	
+					<!-- Delivery Date -->
+					<div class="delivery-date">Delivery date: ${deliveryDateFormat}</div>
+	
+					<div class="cart-item-details-grid">
+	
+						<!-- Product Image -->
+						<img class="product-image" src="${matchingProduct.getImageUrl()}">
+	
+						<div class="cart-item-details">
+	
+							<!-- Product Name -->
+							<div class="product-name">${matchingProduct.getName()}</div>
+	
+							<!-- Product Price -->
+							<div class="product-price">${matchingProduct.getPrice()}</div>
+	
+							<div class="product-quantity jsTest-productQuantity-${matchingProduct.getID()}">
+								
+								<!-- Quantity Label -->
+								<span>Quantity: <span class="quantity-label js-quantityLabel-${matchingProduct.getID()}">${cartItem.quantity}</span></span>
+								
+								<!-- Update Button -->
+								<span class="update-quantity-link 
+								link-primary 
+								js-updateQuantityLink" 
+								data-product-id="${matchingProduct.getID()}">
+								Update</span>
+	
+								<!-- Quantity Input -->
+								<input type="number" class="quantity-input js-quantityInput-${matchingProduct.getID()}" data-product-id="${matchingProduct.getID()}">
+								
+								<!-- Save Button -->
+								<span class="save-quantity-link 
+								link-primary 
+								js-saveLink" 
+								data-product-id="${matchingProduct.getID()}">
+								Save</span>
+	
+								<!-- Delete Button -->
+								<span class="delete-quantity-link 
+								link-primary 
+								js-deleteLink 
+								jsTest-deleteLink-${matchingProduct.getID()}" data-product-id="${matchingProduct.getID()}">
+								Delete</span>
+							</div>
+	
 						</div>
-
-					</div>
-
-					<div class="delivery-options">
-						<div class="delivery-options-title">Choose a delivery option:</div>
-						${deliveryOptionsHTML(matchingProduct, cartItem)}
+	
+						<div class="delivery-options">
+							<div class="delivery-options-title">Choose a delivery option:</div>
+							${deliveryOptionsHTML(matchingProduct, cartItem)}
+						</div>
 					</div>
 				</div>
-			</div>
-		`;
-	});
+			`;
+		});
+	}
 
 	document.querySelector(".js-orderSummary").innerHTML = cartSummaryHTML; // Render cart items
 
@@ -142,6 +154,7 @@ export function renderOrderSummary(cartInstance = cart) {
 			
 			payment.init();
 			renderCheckoutHeader();
+			renderOrderSummary();
 			renderPaymentSummary();
 		});
 	});
