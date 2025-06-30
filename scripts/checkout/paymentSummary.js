@@ -1,7 +1,4 @@
 import { cart } from "../../data/cart-class.js";
-import { getProduct } from '../../data/products.js';
-
-import { delivery } from '../../data/deliveryOptions.js';
 import { placeOrder } from "../../data/ordersData.js";
 import { payment } from "../utils/money/paymentCalculation.js";
 
@@ -47,8 +44,19 @@ export function renderPaymentSummary() {
 	document.querySelector('.js-paymentSummary').innerHTML = paymentSummaryHTML;
 
 	const placeOrderBtn = document.querySelector('.js-PlaceOrderBtn');
-	placeOrderBtn.addEventListener('click', () => {
-		placeOrder();
+	placeOrderBtn.addEventListener('click', async () => {
+		placeOrderBtn.textContent = "Placing order...";
+		placeOrderBtn.disabled = true;
+	
+		try {
+			await placeOrder();
+			window.location.href = 'orders.html';
+		} catch (err) {
+			console.log('Place order failed:', err);
+			placeOrderBtn.textContent = "Place your order";
+			placeOrderBtn.disabled = false;
+			alert('Order failed. Please try again.');
+		}
 	});
 
 // console.log(cart.getItems())
