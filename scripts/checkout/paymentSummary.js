@@ -1,6 +1,7 @@
 import { cart } from "../../data/cart-class.js";
 import { placeOrder } from "../../data/ordersData.js";
 import { payment } from "../utils/money/paymentCalculation.js";
+import { renderOrderSummary } from "./orderSummary.js";
 
 export function renderPaymentSummary() {
 
@@ -50,6 +51,10 @@ export function renderPaymentSummary() {
 	
 		try {
 			await placeOrder();
+			cart.removeToStorage(); // after placing the items, it will be remove in the cart
+			// refresh the page
+			renderOrderSummary();
+			renderPaymentSummary();
 			window.location.href = 'orders.html';
 		} catch (err) {
 			console.log('Place order failed:', err);

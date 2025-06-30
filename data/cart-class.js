@@ -21,7 +21,7 @@ class Cart {
 			} else {
 				// if false, this will be your default cart fallback
 				this.cartItem = [
-					{
+					/* { // example data only
 						productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
 						quantity: 2,
 						deliveryOptionsId: '1'
@@ -30,7 +30,7 @@ class Cart {
 						productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
 						quantity: 1,
 						deliveryOptionsId: '2'
-					}
+					} */
 				];
 			}
 
@@ -39,6 +39,10 @@ class Cart {
 	// Save cart to localStorage
 	saveToStorage() {
 		localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItem));
+	}
+
+	removeToStorage() {
+		localStorage.removeItem(this.#localStorageKey);
 	}
 
 	addToCart(productId, quantity) {
