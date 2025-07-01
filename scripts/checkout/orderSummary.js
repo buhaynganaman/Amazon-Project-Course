@@ -10,11 +10,10 @@ export function renderOrderSummary(cartInstance = cart) {
 	let cartSummaryHTML = '';
 
 	if(!cart.calculateCartQuantity()) {
-		console.log('Empty Cart')
 		cartSummaryHTML = 
 		`
 			<p style="margin-bottom: 15px">Your cart is empty.</p>
-			<button class="button-primary">
+			<button class="button-primary" style="padding: 10px 15px">
 			<a href="amazon.html">View Products</a>
 			</button>
 		`
