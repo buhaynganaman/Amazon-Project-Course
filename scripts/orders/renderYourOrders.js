@@ -30,7 +30,8 @@ export function renderYourOrders() {
         </div>
 
         <!-- PRODUCT DETAIL PART -->
-        ${renderProductDetails(orderItem.getProducts())}
+        ${renderProductDetails(orderItem.getProducts(), orderItem.getId())}
+
       </div>
     `;
   });
@@ -72,11 +73,13 @@ export function renderYourOrders() {
 	}
 }
 
-function renderProductDetails(products) {
+function renderProductDetails(products, orderId) {
   let productDetails = ``;
 
   products.forEach(productItem => {
     const matchingProduct = getProduct(productItem.getProductId());
+
+    if (!matchingProduct) return; // skip if product is not found
 
     productDetails += `
       <div class="order-details-grid js-orderDetails-${matchingProduct.getID()}">
@@ -100,7 +103,7 @@ function renderProductDetails(products) {
         </div>
 
         <div class="product-actions">
-          <a href="tracking.html">
+          <a href="tracking.html?orderId=${orderId}&productId=${matchingProduct.getID()}">
             <button class="track-package-button button-secondary">
             Track package
             </button>
