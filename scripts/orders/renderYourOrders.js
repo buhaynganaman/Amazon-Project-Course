@@ -30,7 +30,7 @@ export function renderYourOrders() {
         </div>
 
         <!-- PRODUCT DETAIL PART -->
-        ${renderProductDetails(orderItem.getProducts(), orderItem.getId())}
+        ${productDetails(orderItem.getProducts(), orderItem.getId())}
 
       </div>
     `;
@@ -73,7 +73,7 @@ export function renderYourOrders() {
 	}
 }
 
-function renderProductDetails(products, orderId) {
+function productDetails(products, orderId) {
   let productDetails = ``;
 
   products.forEach(productItem => {
