@@ -1,12 +1,15 @@
 import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money/moneyFormat.js';
-import { delivery } from '../../data/deliveryOptions.js'; // Delivery options data
+import { delivery, getDeliveryDetails } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 import { payment } from '../utils/money/paymentCalculation.js';
 
 export function renderOrderSummary(cartInstance = cart) {
+
+	console.log(cart)
+
 	let cartSummaryHTML = '';
 
 	if(!cart.calculateCartQuantity()) {
@@ -22,15 +25,16 @@ export function renderOrderSummary(cartInstance = cart) {
 
 			const productId = cartItem.productId;
 			let matchingProduct = getProduct(productId); // Find matching product
-	
-			const deliveryOption = delivery.getDeliveryOption(cartItem.deliveryOptionsId); // Find matching delivery option
-			const deliveryDateFormat = delivery.calculateDeliveryDate(deliveryOption.deliveryDays)
+
+			const deliveryDate = getDeliveryDetails(cartItem.deliveryOptionsId);
+			console.log(deliveryDate);
+
 	
 			cartSummaryHTML += `
 				<div class="cart-item-container js-cartItemContainerTEST js-CartItemContainer-${matchingProduct.getID()}">
 	
 					<!-- Delivery Date -->
-					<div class="delivery-date">Delivery date: ${deliveryDateFormat}</div>
+					<div class="delivery-date">Delivery date: ${deliveryDate}</div>
 	
 					<div class="cart-item-details-grid">
 	
@@ -163,7 +167,6 @@ export function renderOrderSummary(cartInstance = cart) {
 		option.addEventListener('click', () => {
 			const { productId, deliveryOptionId } = option.dataset;
 			cartInstance.updateDeliveryOption(productId, deliveryOptionId);
-			console.log('Click')
 			payment.init();
 			renderOrderSummary();
 			renderPaymentSummary();

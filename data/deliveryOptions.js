@@ -44,3 +44,11 @@ class Delivery {
 }
 
 export const delivery = new Delivery(deliveryData);
+
+export function getDeliveryDetails(deliveryOptionId) {
+
+  const deliveryOption = delivery.getDeliveryOption(deliveryOptionId);
+  const deliveryDateFormat = delivery.calculateDeliveryDate(deliveryOption.deliveryDays);
+
+  return deliveryDateFormat;
+}
