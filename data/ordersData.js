@@ -2,6 +2,7 @@ import { cart } from "./cart-class.js";
 import { readableDate } from "../scripts/utils/date & time/date.js";
 import { formatCurrency } from "../scripts/utils/money/moneyFormat.js";
 import { payment } from "../scripts/utils/money/paymentCalculation.js";
+import { overrideDeliveryDates } from "../scripts/utils/date & time/overideDelivery.js";
 
 export async function placeOrder() {
   try {
@@ -21,6 +22,8 @@ export async function placeOrder() {
 
     const order = await response.json();
     order.totalCostCents = payment.getRawFinalTotalPrice();
+    overrideDeliveryDates(order, cart.getItems());
+    
     orders.addOrder(order);
     console.log(order);
   } catch (error) {
@@ -39,7 +42,7 @@ class ProductItem {
   }
 
   getDeliveryDate() {
-    return readableDate(this.data.estimatedDeliveryTime);
+    return this.data.estimatedDeliveryTime;
   }
 
   getQuantity() {
