@@ -46,22 +46,33 @@ export function renderPaymentSummary() {
 
 	const placeOrderBtn = document.querySelector('.js-PlaceOrderBtn');
 	placeOrderBtn.addEventListener('click', async () => {
-		placeOrderBtn.textContent = "Placing order...";
-		placeOrderBtn.disabled = true;
-	
-		try {
-			await placeOrder();
-			cart.removeToStorage(); // after placing the items, it will be remove in the cart
-			// refresh the page
-			renderOrderSummary();
-			renderPaymentSummary();
-			window.location.href = 'orders.html';
-		} catch (err) {
-			console.log('Place order failed:', err);
-			placeOrderBtn.textContent = "Place your order";
-			placeOrderBtn.disabled = false;
-			alert('Order failed. Please try again.');
+
+		if (!cart.getItems().length) {
+
+			alert('Your cart is empty. Please add items to your cart before placing an order.');
+			return;
+
+		} else {
+
+			placeOrderBtn.textContent = "Placing order...";
+			placeOrderBtn.disabled = true;
+		
+			try {
+				await placeOrder();
+				cart.removeToStorage(); // after placing the items, it will be remove in the cart
+				// refresh the page
+				renderOrderSummary();
+				renderPaymentSummary();
+				window.location.href = 'orders.html';
+			} catch (err) {
+				console.log('Place order failed:', err);
+				placeOrderBtn.textContent = "Place your order";
+				placeOrderBtn.disabled = false;
+				alert('Order failed. Please try again.');
+			}
+
 		}
+
 	});
 
 // console.log(cart.getItems())
