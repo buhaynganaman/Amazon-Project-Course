@@ -8,8 +8,6 @@ import { payment } from '../utils/money/paymentCalculation.js';
 
 export function renderOrderSummary(cartInstance = cart) {
 
-	console.log(cart)
-
 	let cartSummaryHTML = '';
 
 	if(!cart.calculateCartQuantity()) {
@@ -27,8 +25,6 @@ export function renderOrderSummary(cartInstance = cart) {
 			let matchingProduct = getProduct(productId); // Find matching product
 
 			const deliveryDate = getDeliveryDetails(cartItem.deliveryOptionsId);
-			console.log(deliveryDate);
-
 	
 			cartSummaryHTML += `
 				<div class="cart-item-container js-cartItemContainerTEST js-CartItemContainer-${matchingProduct.getID()}">
