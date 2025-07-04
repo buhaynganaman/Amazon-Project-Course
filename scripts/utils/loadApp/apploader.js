@@ -17,6 +17,6 @@ export async function loadApp(callbacks = []) {
     });
 
   } catch (error) {
-    console.error("Something went wrong loading the app:", error);
+    console.error("SOMETHING WENT WRONG LOADING THE APP:", error);
   }
 }
