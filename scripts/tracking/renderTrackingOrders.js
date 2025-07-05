@@ -42,5 +42,4 @@ export function renderTrackingOrder(productItem) {
   `;
 
   document.querySelector('.js-OrderTracking').innerHTML = trackingOrderHTML;
-  console.log('Rendered');
 }
