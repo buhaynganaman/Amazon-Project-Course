@@ -35,11 +35,11 @@ class Delivery {
 
 		// While loop to skip weekends
     while (weekends.includes(deliveryDateFormat)) {
-      deliveryDate = deliveryDate.add(1, 'days');
+      deliveryDate = deliveryDate.add(1, 'days'); // add one day to skip weekends
       deliveryDateFormat = deliveryDate.format('dddd'); // Update format
     }
 
-    return deliveryDate.format('dddd, MMMM D');
+    return deliveryDate.format('dddd, MMMM D'); // Ex. Monday, January 1
   }
 }
 
