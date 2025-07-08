@@ -14,6 +14,7 @@ class Product {
   name;
   rating;
   priceCents;
+  keywords;
 
   constructor(productDetails) {
     // Initializes a new product object with details
@@ -22,6 +23,7 @@ class Product {
     this.name = productDetails.name;
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
+    this.keywords = productDetails.keywords || []; // Default to empty array if keywords are not provided
   }
 
   getID() {
@@ -46,6 +48,10 @@ class Product {
 
   getPrice() { // Converts price from cents and formats it as currency (e.g. $10.99)
     return `$${formatCurrency(this.priceCents)}`; 
+  }
+
+  getKeywords() {
+    return this.keywords; // Returns the keywords associated with the product
   }
 
   extraInfoHTML() { 
@@ -119,7 +125,7 @@ export function loadProductsFetch(renderHomePage) {
     });
 
     console.log('Loaded Products from fetch')
-
+  
     // Safely call the renderHomePage function if it exists and is valid
     safeCallback(renderHomePage);
   });/* .catch((error) => {
