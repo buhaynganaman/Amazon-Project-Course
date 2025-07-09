@@ -10,16 +10,19 @@ let URLproductId = url.searchParams.get('productId');
 
 export function postOrders() {
 
+  // Check if URL parameters are present
   const orderMatch = orders.getOrders().find(order => order.getId() === URLorderId);
   if (!orderMatch) return;
 
   const productMatch = orderMatch.getProducts().find(product => product.getProductId() === URLproductId);
   if (!productMatch) return;
 
+  // Convert order and product delivery dates to timestamps
   const orderTime = convertToTimestamp(orderMatch.getDate());
   const deliveryTime = convertToTimestamp(productMatch.getDeliveryDate());
   const currentTime = Date.now();
 
+  // Calculate progress to get percentage
   const progressPercent = (((currentTime - orderTime) / (deliveryTime - orderTime)) * 100).toFixed(2);
 
   console.log(`Order Time: ${orderTime}`);
@@ -58,6 +61,7 @@ export function renderTrackingOrder(productItem, progressPercent) {
 }
 
 function progressStatus(progressPercent) {
+  // Determine the class based on progress percentage
   const preparingClass = progressPercent < 50 ? "current-status" : "";
   const shippedClass = progressPercent >= 50 && progressPercent < 100 ? "current-status" : "";
   const deliveredClass = progressPercent >= 100 ? "current-status" : "";
