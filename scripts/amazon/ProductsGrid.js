@@ -2,7 +2,75 @@ import { cart } from '../../data/cart-class.js';
 import { products } from '../../data/products.js';
 import { updateCartQuantity } from '../headers/renderHeaders.js';
 
+
 export function renderProductsGrid() {
+
+	const url = new URL(window.location.href);
+	// get url link IDs
+	let URLsearch = url.searchParams.get('search');
+
+	if(!URLsearch) {
+		// Original Products Rendered
+		createProductHTML(products);
+
+	} else {
+		// Search Item Result Render
+		const matchedProducts = products.filter(product => {
+			const keywords = product.getKeywords(); // example: ['apple', 'laptop']
+			const found = keywords.some(keyword => keyword.toLowerCase().includes(URLsearch.toLowerCase()));
+
+			return found;
+		});
+		
+		if(matchedProducts.length === 0) {
+			window.alert("Product not found!");
+			window.location.href = 'amazon.html';
+		}
+
+		createProductHTML(matchedProducts);
+	}
+
+	// Initialize timeout IDs for setTimeout in an object to store each product timeout ID
+	const addedMessageTimeouts = {};
+	function addedMessage(productId) {
+		const previousTimeoutId = addedMessageTimeouts[productId];
+		if (previousTimeoutId) {
+			clearTimeout(previousTimeoutId); // Restart timeout if it exists
+		}
+
+		const addedMessage = document.querySelector(`.js-addedToCart-${productId}`);
+		addedMessage.style.opacity = 1; // Show added message
+
+		const timeoutID = setTimeout(() => {
+			addedMessage.style.opacity = 0;
+		}, 2000);
+
+		// Save the timeoutId for this product
+		addedMessageTimeouts[productId] = timeoutID;
+	}
+
+
+
+	// Add to Cart Button DOM
+	document.querySelectorAll('.js-addToCart').forEach((button) => {
+		button.addEventListener('click', () => {
+			const { productId } = button.dataset; // Get the button data-attribute to identify which product is clicked
+
+			const quantitySelector = document.querySelector(`.js-QuantitySelector-${productId}`);
+			let quantity = Number(quantitySelector.value); // Get the selected quantity
+
+			cart.addToCart(productId, quantity);
+			addedMessage(productId);
+			updateCartQuantity();
+
+			// console.log(cart.cartItem); // for checking
+		});
+	});
+	updateCartQuantity();
+}
+
+
+function createProductHTML(products) {
 
 	let productsHTML = ``; // store the HTML template
 
@@ -62,41 +130,4 @@ export function renderProductsGrid() {
 
 	const productGrid = document.querySelector(".js-productsGrid");
 	productGrid.innerHTML = productsHTML; // render the products to the page
-
-	// Initialize timeout IDs for setTimeout in an object to store each product timeout ID
-	const addedMessageTimeouts = {};
-	function addedMessage(productId) {
-		const previousTimeoutId = addedMessageTimeouts[productId];
-		if (previousTimeoutId) {
-			clearTimeout(previousTimeoutId); // Restart timeout if it exists
-		}
-
-		const addedMessage = document.querySelector(`.js-addedToCart-${productId}`);
-		addedMessage.style.opacity = 1; // Show added message
-
-		const timeoutID = setTimeout(() => {
-			addedMessage.style.opacity = 0;
-		}, 2000);
-
-		// Save the timeoutId for this product
-		addedMessageTimeouts[productId] = timeoutID;
-	}
-
-	// Add to Cart Button DOM
-	document.querySelectorAll('.js-addToCart').forEach((button) => {
-		button.addEventListener('click', () => {
-			const { productId } = button.dataset; // Get the button data-attribute to identify which product is clicked
-
-			const quantitySelector = document.querySelector(`.js-QuantitySelector-${productId}`);
-			let quantity = Number(quantitySelector.value); // Get the selected quantity
-
-			cart.addToCart(productId, quantity);
-			addedMessage(productId);
-			updateCartQuantity();
-
-			// console.log(cart.cartItem); // for checking
-		});
-	});
-	updateCartQuantity();
-
 }
