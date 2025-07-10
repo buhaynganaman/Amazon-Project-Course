@@ -6,35 +6,58 @@ import { updateCartQuantity } from "../headers/renderHeaders.js";
 export function renderYourOrders() {
   let yourOdersHTML = ``;
 
-  orders.getOrders().forEach(orderItem => {
-    yourOdersHTML += `
-      <div class="order-container js-OrderContainer-${orderItem.getId()}">
-
-        <!-- HEADER PART -->
-        <div class="order-header">
-          <div class="order-header-left-section">
-            <div class="order-date">
-              <div class="order-header-label">Order Placed:</div>
-              <div>${orderItem.getDate()}</div>
+  if(!orders.getOrders().length) {
+      yourOdersHTML += `
+        <div class="order-container">
+  
+          <div class="order-header">
+            <div class="order-header-left-section">
+              <div class="order-date">
+                <div class="order-header-label">No orders yet</div>
+              </div>
             </div>
-            <div class="order-total">
-              <div class="order-header-label">Total:</div>
-              <div>$${orderItem.getTotal()}</div>
-            </div>
-          </div>
 
-          <div class="order-header-right-section">
-            <div class="order-header-label">Order ID:</div>
-            <div>${orderItem.getId()}</div>
-          </div>
+            <div class="order-header-right-section">
+              <div class="order-header-label">
+              <a href="amazon.html" class="header-link">
+              View Products
+              </a>
+              </div>
+            </div>
+  
         </div>
-
-        <!-- PRODUCT DETAIL PART -->
-        ${productDetails(orderItem.getProducts(), orderItem.getId())}
-
-      </div>
-    `;
-  });
+      `;
+  } else {
+    orders.getOrders().forEach(orderItem => {
+      yourOdersHTML += `
+        <div class="order-container js-OrderContainer-${orderItem.getId()}">
+  
+          <!-- HEADER PART -->
+          <div class="order-header">
+            <div class="order-header-left-section">
+              <div class="order-date">
+                <div class="order-header-label">Order Placed:</div>
+                <div>${orderItem.getDate()}</div>
+              </div>
+              <div class="order-total">
+                <div class="order-header-label">Total:</div>
+                <div>$${orderItem.getTotal()}</div>
+              </div>
+            </div>
+  
+            <div class="order-header-right-section">
+              <div class="order-header-label">Order ID:</div>
+              <div>${orderItem.getId()}</div>
+            </div>
+          </div>
+  
+          <!-- PRODUCT DETAIL PART -->
+          ${productDetails(orderItem.getProducts(), orderItem.getId())}
+  
+        </div>
+      `;
+    });
+  }
 
   const orderContainer = document.querySelector('.js-OrdersGrid');
   orderContainer.innerHTML = yourOdersHTML;
