@@ -15,7 +15,7 @@ export function renderOrderSummary(cartInstance = cart) {
 		`
 			<p style="margin-bottom: 15px">Your cart is empty.</p>
 			<button class="button-primary" style="padding: 10px 15px">
-			<a href="amazon.html">View Products</a>
+			<a href="amazon.html" class="header-link">View Products</a>
 			</button>
 		`
 	} else {
