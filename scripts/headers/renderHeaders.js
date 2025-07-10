@@ -1,8 +1,7 @@
 import { cart } from '../../data/cart-class.js';
-import { products } from '../../data/products.js';
 import { loadApp } from '../utils/loadApp/apploader.js';
 
-loadApp([renderHeaders]);
+loadApp([renderHeaders, updateCartQuantity]);
 
 
 function renderHeaders() {
